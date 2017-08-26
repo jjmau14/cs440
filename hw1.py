@@ -18,34 +18,33 @@ def breadthFirstSearch(startState, goalState, successorsf):
 	return bfs
 		
 	
-def depthFirstSearch(start, end, successorsf):
-	# Initialize stack with source node
+def depthFirstSearch(start, end, successorsf, visited=[], parentTable={}):
+	# Initialize stack with start
 	stack = list(start)
-	visited = []
-
-	# While elements are in the stack (unexplored nodes exists)
+	
+	# While something is still in the stack
 	while stack:
 		
-		# Pop the top of the stack
+		# Pop and visit top of stack
 		node = stack.pop()
-		if node is end:
-			visited.append(node)
-			return visited
+		visited.append(node)
 		
-		# Only add white nodes
-		if node not in visited:
-			visited.append(node)
+		if successorsf(node):
+			for child in successorsf(node):
+				if child not in visited:
+					stack.append(child)
+					parentTable[child] = node
+
+	return getPath(start, end, parentTable)
+
+def getPath(start, end, parents, path=[]):
+	node = end
+	while node != start:
+		path.insert(0, node)
+		node = parents[node]
+	path.insert(0, start)
+	return path
 	
-			# Add child nodes to stack
-			if successorsf(node):
-				for child_node in successorsf(node):
-					stack.append(child_node)
-			else:
-				visited.remove(node)
-
-	return visited
-
-		
 successors = {'a': ['b', 'c', 'd'],
  'b': ['e', 'f', 'g'],
  'c': ['a', 'h', 'i'],
@@ -58,4 +57,4 @@ def successorsf(state):
 	return copy(successors.get(state))	
 
 if __name__ == '__main__':
-	print(depthFirstSearch('a', 'm', successorsf))
+	print(depthFirstSearch('a', 'z', successorsf))
