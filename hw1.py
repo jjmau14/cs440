@@ -24,7 +24,7 @@ def depthFirstSearch(start, end, successorsf, visited=[], parentTable={}):
 	
 	# While something is still in the stack
 	while stack:
-		
+		print(stack)
 		# Pop and visit top of stack
 		node = stack.pop()
 		visited.append(node)
