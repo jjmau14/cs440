@@ -5,7 +5,7 @@ def breadthFirstSearch(start, end, successorsf, visited=[], queue=[], path=[]):
 		
 	
 def depthFirstSearch(start, end, successorsf, visited=[], path=[]):
-	path .append(start)
+	path.append(start)
 	
 	if start is end:
 		return path
