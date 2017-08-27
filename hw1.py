@@ -1,3 +1,7 @@
+# Josh Mau
+# BFS and DFS implementation in python
+# August 26th, 2017
+
 from copy import copy
 
 def breadthFirstSearch(start, end, successorsf, visited=[], queue=[], path=[]):
