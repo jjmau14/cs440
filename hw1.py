@@ -4,37 +4,28 @@
 
 from copy import copy
 
-def breadthFirstSearch(startState, goalState, successorsf):
-	bfs = []
-	stack = list(startState)
-	
-	while stack:
-		print(stack)
-		node = stack.pop(0)
-		if node == goalState:
-			bfs.append(goalState)
-			return bfs
-		if not node in bfs:
-			bfs.append(node)
-			if successorsf(node):
-				for child in successorsf(node):
-					stack.append(child)
-	return bfs
+def breadthFirstSearch(start, end, successorsf, visited=[], queue=[], path=[]):
+	pass
 		
 	
-def depthFirstSearch(startState, goalState, successorsf):
-	dfs = []
-	stack = list(startState)
+def depthFirstSearch(start, end, successorsf, visited=[], path=[]):
+	path.append(start)
 	
-	while stack:
-		node = stack.pop()
-		if not node in dfs:
-			dfs.append(node)
-			if successorsf(node):
-				for child in successorsf(node):
-					stack.append(child)
-	return dfs
+	if start is end:
+		return path
 	
+	else:
+		if successorsf(start):
+			for child in successorsf(start):
+				if child not in visited:
+					visited.append(child)
+					current_path = depthFirstSearch(child, end, successorsf, visited, path)
+					if current_path:
+						return current_path
+					else:
+						path.pop()
+	return None
+
 	
 successors = {'a': ['b', 'c', 'd'],
  'b': ['e', 'f', 'g'],
@@ -48,4 +39,4 @@ def successorsf(state):
 	return copy(successors.get(state))	
 
 if __name__ == '__main__':
-	print(breadthFirstSearch('a', 'm', successorsf))
+	print(depthFirstSearch('a', 'm', successorsf))
